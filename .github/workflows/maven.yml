@@ -38,7 +38,7 @@ jobs:
   
       - name: Build Docker image
         run: |
-          cd spring-boot-data-jpa-mysql && docker build -t aharoud/myapp-backend:latest .
+          cd spring-boot-data-jpa-mysql && docker build -f "DockerFile" -t aharoud/myapp-backend:latest .
 #         docker login -u your-docker-username -p ${{ secrets.DOCKER_PASSWORD }}
 #         docker push your-docker-username/your-docker-repo:latest  
       
