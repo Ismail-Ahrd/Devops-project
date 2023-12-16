@@ -45,5 +45,9 @@ jobs:
           cd spring-boot-data-jpa-mysql && docker build -f "DockerFile" -t aharoud/myapp-backend:latest .
 #         docker login -u your-docker-username -p ${{ secrets.DOCKER_PASSWORD }}
 #         docker push your-docker-username/your-docker-repo:latest  
+      - name: run a container for testing
+        run:  |
+          docker run -d -p 8080:8080 --name myapp-backend aharoud/myapp-backend:latest
+          sleep 10 # Wait for the application to start
       
 
