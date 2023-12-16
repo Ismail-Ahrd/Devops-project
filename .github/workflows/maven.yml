@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build:
+  maven-build:
     runs-on: ubuntu-latest
 
     services:
@@ -28,4 +28,18 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: cd spring-boot-data-jpa-mysql && mvn -B package
+  docker-build:
+      runs-on: ubuntu-latest
+      needs: maven-build
+  
+      steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+  
+      - name: Build Docker image
+        run: |
+          cd spring-boot-data-jpa-mysql && docker build -t aharoud/myapp-backend:latest .
+#         docker login -u your-docker-username -p ${{ secrets.DOCKER_PASSWORD }}
+#         docker push your-docker-username/your-docker-repo:latest  
+      
 
