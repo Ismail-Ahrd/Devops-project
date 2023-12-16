@@ -40,9 +40,12 @@ jobs:
   
       steps:
       - name: Download JAR file
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v2
         with:
           name: app
+          path: target
+      - name: ls
+        run: ls 
 
       - name: Checkout code
         uses: actions/checkout@v3
