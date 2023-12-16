@@ -1,6 +1,6 @@
 # Ignore Maven build artifacts
-target/
-*/target/
+#target/
+#*/target/
 # Ignore Gradle build artifacts
 build/
 */build/
