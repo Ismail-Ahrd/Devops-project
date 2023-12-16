@@ -48,6 +48,7 @@ jobs:
       - name: run a container for testing
         run:  |
           docker run -d -p 8080:8080 --name myapp-backend aharoud/myapp-backend:latest
-          sleep 10 # Wait for the application to start
+          sleep 20 # Wait for the application to start
+          docker logs myapp-backend
       
 
