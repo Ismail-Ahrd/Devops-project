@@ -36,7 +36,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: ls
-        run: ls 
+        run: ls
+      - name: ls2
+        run: ls spring-boot-data-jpa-mysql
   
       - name: Build Docker image
         run: |
