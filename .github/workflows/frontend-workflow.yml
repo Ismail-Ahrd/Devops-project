@@ -1,55 +1,54 @@
-name: Node.js CI
+name:  Build and Package Frontend App 
 
 on:
   push:
     branches: [ "main" ]
     paths:
-      - 'angular-16-crud-example/**' 
+      - 'angular-16-crud-example/**'
       - '.github/workflows/frontend-workflow.yml'
-
 jobs:
-  npm-build:
-
+  node-build:
     runs-on: ubuntu-latest
-
-    #strategy:
-      #matrix:
-        #node-version: [14.x, 16.x, 18.x]
-        
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: 20
-        cache: 'npm'
-    - run: cd angular-16-crud-example
-    - run: npm i
-    - run: npm run build
-    #- run: npm test
+        node-version: '20'
+
+    - name: Install Dependencies
+      run: |
+        cd angular-16-crud-example
+        npm install
+        npm install -g @angular/cli
+
+    - name: Build Distribution
+      run: cd angular-16-crud-example && ng build 
     - name: Archive dist folder
       uses: actions/upload-artifact@v3
       with:
-        name: app
+        name: dist
         path: angular-16-crud-example/dist
-        
   docker-build:
-      runs-on: ubuntu-latest
-      needs: npm-build
-  
-      steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Download dist folder
-        uses: actions/download-artifact@v3
-        with:
-          name: app
-          path: angular-16-crud-example/dist  
-      - name: Build Docker image
-        run: |
-          cd angular-16-crud-example && docker build -f "DockerFile" -t aharoud/frontend-app:latest .
-      - name: Login to Docker Hub
-        run: docker login -u aharoud -p ${{ secrets.DOCKER_PASSWORD }} 
-      - name: Push the image to Docker Hub
-        run: docker push aharoud/frontend-app:latest   
+    runs-on: ubuntu-latest
+    needs: node-build 
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+    - name: Download dist folder
+      uses: actions/download-artifact@v3
+      with:
+        name: dist
+        path: angular-16-crud-example/dist
+    - name: list 
+      run: ls angular-16-crud-example-master
+    - name: list all
+      run: ls 
+    - name: Build Docker image
+      run: cd angular-16-crud-example-master && docker build -t aharoud/frontend-app:latest .
+    - name: Log in to Docker Hub
+      run: docker login -u aharoud -p ${{ secrets.DOCKER_PASSWORD }}
+    - name: Build and push frontend Docker image
+      run: docker push aharoud/frontend-app:latest
