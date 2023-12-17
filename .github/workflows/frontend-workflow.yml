@@ -23,7 +23,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
+    - run: npm i
     - run: npm run build
     #- run: npm test
     - name: Archive dist folder
@@ -43,7 +43,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: app
-          path: angular-16-crud-example  
+          path: angular-16-crud-example/dist  
       - name: Build Docker image
         run: |
           cd angular-16-crud-example && docker build -f "DockerFile" -t aharoud/frontend-app:latest .
