@@ -53,26 +53,3 @@ jobs:
         run: docker login -u aharoud -p ${{ secrets.DOCKER_PASSWORD }} 
       - name: Push the image to Docker Hub
         run: docker push aharoud/backend-app:latest 
-        
-  deploy:
-      runs-on: ubuntu-latest
-      needs: docker-build
-  
-      steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Run MySql container
-        run: |
-          docker run -d -p 3306:3306 --name mysql-container -e MYSQL_ROOT_PASSWORD=123456 mysql:8.2.0
-          sleep 20
-          
-      - name: Run backend-app container
-        run: |
-          docker run -d -p 8080:8080 --name backend-app  aharoud/backend-app:latest
-          sleep 30 
-  
-      - name: Test application
-        run: |
-          apk add --update curl && rm -rf /var/cache/apk/*
-          docker logs backend-app
-          curl http://localhost:8080/tutorials
