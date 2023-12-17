@@ -1,4 +1,4 @@
-name: Build and Deploy Backend app
+name: Build and Package Backend app
 
 on:
   push:
