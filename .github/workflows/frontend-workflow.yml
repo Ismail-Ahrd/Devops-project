@@ -43,11 +43,11 @@ jobs:
         name: dist
         path: angular-16-crud-example/dist
     - name: list 
-      run: ls angular-16-crud-example-master
+      run: ls angular-16-crud-example
     - name: list all
       run: ls 
     - name: Build Docker image
-      run: cd angular-16-crud-example-master && docker build -t aharoud/frontend-app:latest .
+      run: cd angular-16-crud-example && docker build -t aharoud/frontend-app:latest .
     - name: Log in to Docker Hub
       run: docker login -u aharoud -p ${{ secrets.DOCKER_PASSWORD }}
     - name: Build and push frontend Docker image
