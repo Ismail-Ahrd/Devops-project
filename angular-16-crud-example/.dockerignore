@@ -1,0 +1,28 @@
+# Ignore node_modules since dependencies will be installed in the Docker image
+node_modules
+# Ignore any temporary build files
+#dist/
+.tmp/
+tmp/
+out-tsc/
+# Ignore version control directories and files
+.git/
+.gitignore
+.gitattributes
+.vscode/
+# Ignore npm debugging files
+npm-debug.log*
+# Ignore any local Docker development files
+Dockerfile*
+.dockerignore
+
+# Ignore editor-specific files
+*.swp
+.vscode/
+.idea/
+# Ignore miscellaneous files and directories
+*.log
+*.md
+*.sh
+.DS_Store
+Thumbs.db
