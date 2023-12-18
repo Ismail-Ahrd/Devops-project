@@ -29,6 +29,8 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+    - name: install maven
+      run: sudo apt update && sudo apt install maven
     - name: Build with Maven
       run: cd spring-boot-data-jpa-mysql && mvn -B package
     - name: Archive JAR file
