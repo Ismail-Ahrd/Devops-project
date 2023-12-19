@@ -7,11 +7,15 @@ on:
     paths:
       - 'spring-boot-data-jpa-mysql/**' 
       - '.github/workflows/maven.yml'
+      - '!README.md'
+      - '!angular-16-crud-example/README.md'
+      - '!spring-boot-data-jpa-mysql/README.md'
 
 jobs:
   maven-build:
+    if: "contains(github.event.head_commit.message, 'run-workflow')"
     runs-on: ubuntu-latest
-
+    
     services:
       mysql:
         image: mysql:8.2.0
