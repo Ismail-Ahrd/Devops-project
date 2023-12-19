@@ -6,8 +6,12 @@ on:
     paths:
       - 'angular-16-crud-example/**'
       - '.github/workflows/frontend-workflow.yml'
+      - '!README.md'
+      - '!angular-16-crud-example/README.md'
+      - '!spring-boot-data-jpa-mysql/README.md'
 jobs:
   node-build:
+    if: "contains(github.event.head_commit.message, 'run-workflow')"
     runs-on: self-hosted
     steps:
     - name: Checkout Repository
