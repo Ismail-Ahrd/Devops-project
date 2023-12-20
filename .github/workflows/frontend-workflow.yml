@@ -11,31 +11,12 @@ on:
       - '!spring-boot-data-jpa-mysql/README.md'
 jobs:
   node-build:
-    if: "contains(github.event.head_commit.message, 'run-workflow')"
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v3
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '20'
-        cache: 'npm'
-
-    - name: Install Dependencies
-      run: |
-        cd angular-16-crud-example
-        npm install
-        npm install -g @angular/cli
-
-    - name: Build Distribution
-      run: cd angular-16-crud-example && ng build 
-    - name: Archive dist folder
-      uses: actions/upload-artifact@v3
-      with:
-        name: dist
-        path: angular-16-crud-example/dist
+    if: "contains(github.event.head_commit.message,'run workflow')"
+    uses: ./.github/workflows/angular-build.yaml
+    with:
+       directory: "angular-16-crud-example-master"
+       artifact-name: "dist"
+       
   docker-build:
     runs-on: ubuntu-latest
     needs: node-build 
