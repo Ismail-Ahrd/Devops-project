@@ -27,7 +27,7 @@ jobs:
 
     steps:
     - name: Build maven app
-      uses: ./actions/maven-build-composite-action
+      uses: ./actions/maven-build-composite-action.yml
       with:
         directory: spring-boot-data-jpa-mysql
         
