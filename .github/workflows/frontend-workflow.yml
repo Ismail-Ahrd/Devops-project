@@ -14,7 +14,7 @@ jobs:
     if: "contains(github.event.head_commit.message,'run-workflow')"
     uses: ./.github/workflows/angular-build.yml
     with:
-       directory: "angular-16-crud-example-master"
+       directory: "angular-16-crud-example"
        artifact-name: "dist"
        
   docker-build:
