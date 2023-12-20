@@ -7,8 +7,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: echo Hello
-    - run: ls
     - uses: actions/checkout@v3
     - name: Set up JDK 17
       uses: actions/setup-java@v3
@@ -17,4 +15,5 @@ runs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      run: cd ${{ inputs.directory }} && mvn -B package  
+      run: cd ${{ inputs.directory }} && mvn -B package 
+      shell: bash 
