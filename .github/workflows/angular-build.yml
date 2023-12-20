@@ -1,0 +1,36 @@
+name:  Build an Angular application
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_call:
+    inputs:
+      directory: 
+        description: Name of the directory
+        default: .
+        type: string
+      artifact-name: 
+        description: Name of artifact build name
+        default: dist
+        type: string
+jobs:
+  node-build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+        cache-dependency-path: ${{ inputs.directory }}/package-lock.json
+    - name: Install Dependencies
+      run: cd ${{ inputs.directory }} && npm install && npm install -g @angular/cli
+    - name: Build Distribution
+      run: cd ${{ inputs.directory }} && ng build 
+    - name: Archive dist folder
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ inputs.artifact-name }}
+        path: ${{ inputs.directory }}/${{ inputs.artifact-name }}
