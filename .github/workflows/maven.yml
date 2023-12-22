@@ -31,7 +31,6 @@ jobs:
       uses: ./actions/maven-build-action
       with:
         directory: spring-boot-data-jpa-mysql
-        
     - name: Archive JAR file
       uses: actions/upload-artifact@v3
       with:
