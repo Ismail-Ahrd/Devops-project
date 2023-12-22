@@ -14,5 +14,5 @@ runs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      run: cd ${{ inputs.directory }} && mvn -B package -D DB_HOST=localhost:3308 -D DB_NAME=testdb -D MYSQL_USERNAME=root -D MYSQL_PASSWORD=password -D ALLOWED_ORIGIN=*
+      run: cd ${{ inputs.directory }} && mvn -B package -D DB_HOST=localhost:3306 -D DB_NAME=testdb -D MYSQL_USERNAME=root -D MYSQL_PASSWORD=password -D ALLOWED_ORIGIN=*
       shell: bash 
