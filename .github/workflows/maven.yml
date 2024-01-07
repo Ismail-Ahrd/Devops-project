@@ -79,7 +79,10 @@ jobs:
         run: cat K8s-cluster-devops-project/dev/frontend.yaml
       - name: Commit Changes
         run: |
+          cd K8s-cluster-devops-project
           git add frontend.yaml
           git commit -m "update frontend version to ${{ env.version }}"
       - name: Push Changes
-        run: git push -uf origin main
+        run: |
+          cd K8s-cluster-devops-project
+          git push -uf origin main
