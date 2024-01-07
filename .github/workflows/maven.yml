@@ -73,6 +73,8 @@ jobs:
         run: git clone https://github.com/Ismail-Ahrd/K8s-cluster-devops-project.git
       - name: Navigate to App Manifests
         run: cd K8s-cluster-devops-project/dev/
+      - name: ls
+        run: ls  
       - name: Update Deployment YAML
         run: sed -i 's/frontend-app:[^ ]*/frontend-app:${{ env.version }}/g' frontend.yaml
       - name: Display Updated YAML
