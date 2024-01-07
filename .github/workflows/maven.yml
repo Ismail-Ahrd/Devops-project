@@ -75,7 +75,9 @@ jobs:
       - name: Navigate to App Manifests
         run: cd K8s-cluster-devops-project/dev/
       - name: ls
-        run: ls  
+        run: ls
+      - name: version
+        run: echo ${{needs.docker-build.outputs.version}}     
       - name: Update Deployment YAML
         run: sed -i 's/frontend-app:[^ ]*/frontend-app:${{needs.docker-build.outputs.version}}/g' K8s-cluster-devops-project/dev/frontend.yaml
       - name: Display Updated YAML
