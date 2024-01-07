@@ -81,7 +81,7 @@ jobs:
         run: |
           cd K8s-cluster-devops-project
           ls
-          git add /dev/frontend.yaml
+          git add .
           git commit -m "update frontend version to ${{ env.version }}"
       - name: Push Changes
         run: |
