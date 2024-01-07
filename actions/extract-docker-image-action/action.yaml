@@ -4,6 +4,10 @@ inputs:
   commit-message:
     description: 'Commit message containing version information'
     default: 'version:latest'
+outputs:
+  extract-version:
+    description: "Docker image version"
+    value: ${{ steps.set-version.outputs.version }}    
 runs:
   using: "composite"
   steps:
