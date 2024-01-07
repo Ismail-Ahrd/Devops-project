@@ -59,4 +59,26 @@ jobs:
       run: docker login -u aharoud -p ${{ secrets.DOCKER_PASSWORD }} 
     - name: Push the image to Docker Hub
       run: docker push aharoud/backend-app:${{ env.version }}
-      
+  gitops-k8s-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Configure Git
+        run: |
+          git config --global user.email "ahroudismail9@gmail.com"
+          git config --global user.name "Ismail-Ahrd"
+      - name: Clone Repository
+        run: git clone https://github.com/Ismail-Ahrd/K8s-cluster-devops-project.git
+      - name: Navigate to App Manifests
+        run: cd K8s-cluster-devops-project/dev/
+      - name: Update Deployment YAML
+        run: sed -i 's/frontend-app:[^ ]*/frontend-app:${{ env.version }}/g' frontend.yaml
+      - name: Display Updated YAML
+        run: cat frontend.yaml
+      - name: Commit Changes
+        run: |
+          git add frontend.yaml
+          git commit -m "update frontend version to ${{ env.version }}"
+      - name: Push Changes
+        run: git push -uf origin main
