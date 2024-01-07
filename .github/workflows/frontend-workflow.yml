@@ -30,9 +30,13 @@ jobs:
       with:
         name: dist
         path: angular-16-crud-example/dist
+    - name: Extract Docker Image Version
+      uses: ./actions/extract-docker-image-action
+      with:
+        commit-message: "${{ github.event.head_commit.message }}"    
     - name: Build Docker image
-      run: cd angular-16-crud-example && docker build -f "DockerFile" -t aharoud/frontend-app:latest .
+      run: cd angular-16-crud-example && docker build -f "DockerFile" -t aharoud/frontend-app:${{ env.version }} .
     - name: Log in to Docker Hub
       run: docker login -u aharoud -p ${{ secrets.DOCKER_PASSWORD }}
     - name: Build and push frontend Docker image
-      run: docker push aharoud/frontend-app:latest
+      run: docker push aharoud/frontend-app:${{ env.version }}
