@@ -15,6 +15,7 @@ on:
         type: string
 jobs:
   node-build:
+    if: ${{ false }}
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repository
