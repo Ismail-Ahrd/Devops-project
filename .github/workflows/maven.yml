@@ -74,9 +74,9 @@ jobs:
       - name: ls
         run: ls  
       - name: Update Deployment YAML
-        run: sed -i 's/frontend-app:[^ ]*/frontend-app:${{ env.version }}/g' frontend.yaml
+        run: sed -i 's/frontend-app:[^ ]*/frontend-app:${{ env.version }}/g' K8s-cluster-devops-project/dev/frontend.yaml
       - name: Display Updated YAML
-        run: cat frontend.yaml
+        run: K8s-cluster-devops-project/dev/frontend.yaml
       - name: Commit Changes
         run: |
           git add frontend.yaml
