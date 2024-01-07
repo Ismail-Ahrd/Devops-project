@@ -13,7 +13,7 @@ on:
       
 jobs:
   node-build:
-    if: "contains(github.event.head_commit.message,'run-workflow')"
+    if: "contains(github.event.head_commit.message, 'run-workflow')"
     uses: ./.github/workflows/angular-build.yml
     with:
        directory: "angular-16-crud-example"
@@ -21,6 +21,8 @@ jobs:
        
   docker-build:
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.extract-version.outputs.version }}
     needs: node-build 
     steps:  
     - name: Checkout Repository
@@ -40,3 +42,34 @@ jobs:
       run: docker login -u aharoud -p ${{ secrets.DOCKER_PASSWORD }}
     - name: Build and push frontend Docker image
       run: docker push aharoud/frontend-app:${{ env.version }}
+    - name: Share image version with the next Job
+      id: extract-version
+      run: echo "version=${{ env.version }}" >> "$GITHUB_OUTPUT"
+  gitops-k8s-deploy:
+    runs-on: ubuntu-latest
+    needs: docker-build
+    steps:
+      - name: Configure Git
+        run: |
+          git config --global user.email "ahroudismail9@gmail.com"
+          git config --global user.name "Ismail-Ahrd"
+      - name: Clone Repository
+        run: git clone https://Ismail-Ahrd:${{ secrets.PERSONAL_TOKEN }}@github.com/Ismail-Ahrd/K8s-cluster-devops-project.git
+      - name: Navigate to App Manifests
+        run: cd K8s-cluster-devops-project/dev/
+      - name: ls
+        run: ls
+      - name: version
+        run: echo ${{needs.docker-build.outputs.version}}  
+      - name: Update Deployment YAML
+        run: sed -i 's/backend-app:[^ ]*/backend-app:${{needs.docker-build.outputs.version}}/g' K8s-cluster-devops-project/dev/backend.yaml
+      - name: Display Updated YAML
+        run: cat K8s-cluster-devops-project/dev/backend.yaml
+      - name: Commit Changes
+        run: |
+          cd K8s-cluster-devops-project
+          ls
+          git add .
+          git commit -m "update backend version to ${{needs.docker-build.outputs.version}}"
+      - name: Push Changes
+        run: cd K8s-cluster-devops-project && git push -uf origin main       
