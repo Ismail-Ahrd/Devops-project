@@ -85,3 +85,4 @@ jobs:
           git commit -m "update frontend version to ${{needs.docker-build.outputs.version}}"
       - name: Push Changes
         run: cd K8s-cluster-devops-project && git push -uf origin main
+        
