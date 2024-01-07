@@ -61,7 +61,7 @@ jobs:
       run: docker push aharoud/backend-app:${{ env.version }}
     - name: Share image version with the next Job
       id: extract-version
-      run: echo "version=${{ env.version }}" >> "$GITHUB_OUTPUT"  
+      run: echo "version=${{ env.version }}" >> "$GITHUB_OUTPUT" 
   gitops-k8s-deploy:
     runs-on: ubuntu-latest
     needs: docker-build
@@ -77,16 +77,16 @@ jobs:
       - name: ls
         run: ls
       - name: version
-        run: echo "${{ needs.docker-build.outputs.extract-version }}"  
+        run: echo ${{needs.docker-build.outputs.version}}  
       - name: Update Deployment YAML
-        run: sed -i 's/frontend-app:[^ ]*/frontend-app:"${{ needs.docker-build.outputs.extract-version }}"/g' K8s-cluster-devops-project/dev/frontend.yaml
+        run: sed -i 's/backend-app:[^ ]*/backend-app:${{needs.docker-build.outputs.version}}/g' K8s-cluster-devops-project/dev/backend.yaml
       - name: Display Updated YAML
-        run: cat K8s-cluster-devops-project/dev/frontend.yaml
+        run: cat K8s-cluster-devops-project/dev/backend.yaml
       - name: Commit Changes
         run: |
           cd K8s-cluster-devops-project
           ls
           git add .
-          git commit -m "update frontend version to "${{ needs.docker-build.outputs.extract-version }}""
+          git commit -m "update backend version to ${{needs.docker-build.outputs.version}}"
       - name: Push Changes
         run: cd K8s-cluster-devops-project && git push -uf origin main
