@@ -40,8 +40,6 @@ jobs:
   docker-build:
     runs-on: ubuntu-latest
     needs: maven-build
-    outputs:
-      version: ${{ steps.extract-version.outputs.version }}
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
