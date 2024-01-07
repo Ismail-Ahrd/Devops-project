@@ -12,5 +12,5 @@ runs:
       run: |
         version=$(echo "${{ inputs.commit-message }}" | grep -oP 'version:\s*([\d.]+)')
         echo "Docker Image Version: $version"
-        echo "version=$version >> $GITHUB_ENV"
+        echo "version=$version" >> $GITHUB_ENV
       shell: bash
