@@ -59,6 +59,9 @@ jobs:
       run: docker login -u aharoud -p ${{ secrets.DOCKER_PASSWORD }} 
     - name: Push the image to Docker Hub
       run: docker push aharoud/backend-app:${{ env.version }}
+    - name: Share image version with the next Job
+      id: extract-version
+      run: echo "version=${{ env.version }}" >> "$GITHUB_OUTPUT"  
   gitops-k8s-deploy:
     runs-on: ubuntu-latest
     needs: docker-build
