@@ -68,7 +68,7 @@ jobs:
           git config --global user.email "ahroudismail9@gmail.com"
           git config --global user.name "Ismail-Ahrd"
       - name: Clone Repository
-        run: git clone https://github.com/Ismail-Ahrd/K8s-cluster-devops-project.git
+        run: git clone https://Ismail-Ahrd:${{ secrets.PERSONAL_TOKEN }}@github.com/Ismail-Ahrd/K8s-cluster-devops-project.git
       - name: Navigate to App Manifests
         run: cd K8s-cluster-devops-project/dev/
       - name: ls
@@ -85,4 +85,3 @@ jobs:
           git commit -m "update frontend version to ${{needs.docker-build.outputs.version}}"
       - name: Push Changes
         run: cd K8s-cluster-devops-project && git push -uf origin main
-        
