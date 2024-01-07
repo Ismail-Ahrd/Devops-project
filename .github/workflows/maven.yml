@@ -77,9 +77,9 @@ jobs:
       - name: ls
         run: ls
       - name: version
-        run: echo ${{needs.docker-build.outputs.version}}     
+        run: echo ${{ needs.docker-build.outputs.extract-version }}     
       - name: Update Deployment YAML
-        run: sed -i 's/frontend-app:[^ ]*/frontend-app:${{needs.docker-build.outputs.version}}/g' K8s-cluster-devops-project/dev/frontend.yaml
+        run: sed -i 's/frontend-app:[^ ]*/frontend-app:${{ needs.docker-build.outputs.extract-version }}/g' K8s-cluster-devops-project/dev/frontend.yaml
       - name: Display Updated YAML
         run: cat K8s-cluster-devops-project/dev/frontend.yaml
       - name: Commit Changes
@@ -87,6 +87,6 @@ jobs:
           cd K8s-cluster-devops-project
           ls
           git add .
-          git commit -m "update frontend version to ${{needs.docker-build.outputs.version}}"
+          git commit -m "update frontend version to ${{ needs.docker-build.outputs.extract-version }}"
       - name: Push Changes
         run: cd K8s-cluster-devops-project && git push -uf origin main
