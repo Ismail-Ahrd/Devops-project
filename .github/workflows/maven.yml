@@ -61,4 +61,3 @@ jobs:
       run: docker login -u aharoud -p ${{ secrets.DOCKER_PASSWORD }} 
     - name: Push the image to Docker Hub
       run: docker push aharoud/backend-app:${{ env.version }}
-
