@@ -1,0 +1,16 @@
+name: 'Extract Docker Image Version'
+description: 'Steps for extracting Docker image version'
+inputs:
+  commit-message:
+    description: 'Commit message containing version information'
+    default: 'version:latest'
+runs:
+  using: "composite"
+  steps:
+    - name: Extract Docker Image Version
+      id: set-version
+      run: |
+        version=$(echo "${{ inputs.commit-message }}" | grep -oP 'version:\s*([\d.]+)')
+        echo "Docker Image Version: $version"
+        echo "::set-output name=version::$version"
+      shell: bash
