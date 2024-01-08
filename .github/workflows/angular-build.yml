@@ -1,15 +1,6 @@
 name:  Build an Angular application
 
 on:
-  push:
-    branches: [ "main" ]
-    paths:
-      - 'angular-16-crud-example/**'
-      - '.github/workflows/frontend-workflow.yml'
-      - '!README.md'
-      - '!angular-16-crud-example/README.md'
-      - '!spring-boot-data-jpa-mysql/README.md'
-      - '!actions/maven-build-action/**'
   workflow_call:
     inputs:
       directory: 
